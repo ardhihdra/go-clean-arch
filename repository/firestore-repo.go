@@ -67,3 +67,27 @@ func (r repo) FindAll() ([]entity.Post, error) {
 	}
 	return posts, err
 }
+
+func (r repo) FindByID(id int64) (entity.Post, error) {
+	ctx, client, err := createCtx()
+	var posts entity.Post
+
+	defer client.Close()
+	states := client.Collection(collectionName)
+	query := states.Where("ID", "==", id)
+	iterator := query.Documents(ctx)
+	defer iterator.Stop()
+	for {
+		doc, err := iterator.Next()
+		if err != nil {
+			break
+		}
+		post := entity.Post{
+			ID:    doc.Data()["ID"].(int64),
+			Title: doc.Data()["Title"].(string),
+			Text:  doc.Data()["Text"].(string),
+		}
+		posts = post
+	}
+	return posts, err
+}

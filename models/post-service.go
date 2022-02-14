@@ -12,6 +12,7 @@ type PostModels interface {
 	Validate(post *entity.Post) error
 	Create(post *entity.Post) (*entity.Post, error)
 	FindAll() ([]entity.Post, error)
+	FindByID(id int64) (entity.Post, error)
 }
 
 type models struct{}
@@ -43,4 +44,8 @@ func (*models) Create(post *entity.Post) (*entity.Post, error) {
 
 func (*models) FindAll() ([]entity.Post, error) {
 	return repo.FindAll()
+}
+
+func (*models) FindByID(id int64) (entity.Post, error) {
+	return repo.FindByID(id)
 }

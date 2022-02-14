@@ -1,3 +1,6 @@
+## Plug and Play repositories
+originally from pragmatic reviews channel
+
 arch needs to be :
 - independent of framework
 - testable
